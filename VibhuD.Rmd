@@ -15,21 +15,18 @@ library(ggplot2)
 ```{r}
 library(classdata)
 data(choco)
-x <- choco
 attach(choco)
-x[order(-Rating), ]
+x <- choco
 ```
 ```{r}
 ggplot(x, aes(x="", y=CocoaPercent)) + 
-    geom_boxplot(fill="slateblue", alpha=0.2) + 
-    xlab("rating")
+    geom_boxplot(fill="slateblue", alpha=0.2)
 ```
 ```{r}
 hist(CocoaPercent)
 ```
 ```{r}
 rbb <- aggregate(x$Rating, list(x$CountryBeanOrigin), FUN=mean)
-rbb
 rbb1 <- rbb[1:30, ]
 rbb2 <- rbb[31:61, ]
 ggplot(rbb1, aes(x=Group.1, y=x)) + 
@@ -46,8 +43,8 @@ ggplot(rbb2, aes(x=Group.1, y=x)) +
 ```{r}
 rbcp <- aggregate(x$Rating, list(x$CocoaPercent), FUN=mean)
 colnames(rbcp) <- c("CocoaPercent", "Rating")
-rbcp <- rbcp[order(rbcp$Rating), ]
-##rbcp$CocoaPercent <- factor(rbcp$CocoaPercent, levels = rbcp$CocoaPercent)
+rbcp <- rbcp[order(-rbcp$Rating), ]
+rbcp
 ggplot(rbcp, aes(x=as.factor(CocoaPercent), y=Rating)) + 
   geom_bar(stat = "identity", width = 0.5)+
   theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5))
@@ -57,4 +54,5 @@ ggplot(x, aes(x=as.factor(CocoaPercent), y=Rating)) +
     theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5))+
     xlab("Cocoa")
 ```
-The Best Chocolates can be found between 63% and 72% Cocoa
+
+  Looking at the graph it appears most of the The Best Chocolates can be found between 63% and 72% Cocoa. Looking at it numerically a majority of the average ratings above 3 occur between 60% and 80% with a few examples having higher than 80%
